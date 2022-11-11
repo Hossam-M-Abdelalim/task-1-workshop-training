@@ -1,0 +1,139 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    font-style: ;
+}
+
+.container {
+    width: 300px;
+    align-items: center;
+    padding-left: 15px;
+    padding-top: 1px;
+}
+
+.card {
+    list-style: none;
+    background-color: #d8d8d8;
+    max-width: 100%;
+    box-shadow: 0 0 5px #000000;
+    border-radius: 10px;
+
+}
+
+.card2 {
+    margin-right: 50px;
+    list-style: none;
+    background-color: #d8d8d8;
+    border-style: solid;
+    border: lightgray;
+    max-width: 100%;
+    box-shadow: 0 0 5px dimgrey;
+    border-radius: 3px;
+
+}
+
+.card h3 {
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+
+.card ul li {
+    list-style: none;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.card2 ul li {
+    list-style: none;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+.card2 ul{
+    padding: 0px;
+    padding-bottom: 50px;
+}
+
+.ulist {
+    width: 100%;
+    position: relative;
+    padding: 5px 20px;
+}
+
+.ulist li {
+    list-style: none;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    box-shadow: 0 0 6px #000000;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ulist li div button {
+    background-color: #bcbcbc;
+    border-radius: 50%;
+    font-size: 8px;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    border: none;
+    color: #ffffff;
+}
+
+.ulist .addcard {
+    box-shadow: none;
+    background-color: #d8d8d8;
+    border: dimgrey;
+    border-radius: 5px;
+    border-style: dashed;
+    padding: 10px;
+}
+
+.ulist .addcard button {
+    border: none;
+    background-color: #d8d8d8;
+    color: dimgrey;
+    max-width: 100%;
+    font-size: 100%;
+    white-space: nowrap;
+}
+
+.flex {
+    display: flex !important;
+}
+
+.justify-between {
+    justify-content: space-between !important;
+}
+
+.align-center {
+    align-items: center !important;
+}
+.chk{
+    text-decoration: line-through;
+}
+.bar{
+    padding:10px;
+    border-bottom: solid;
+    border-bottom-color: gray;
+    display: flex;
+    justify-content: space-between;
+}
+.bar h5{
+    margin: 0;
+}
+.bar div button{
+    background-color: #bcbcbc;
+    border-radius: 50%;
+    font-size: 8px;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    border: none;
+    color: #ffffff;
+}
