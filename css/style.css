@@ -4,7 +4,6 @@
 
 body {
     font-family: sans-serif;
-    font-style: ;
 }
 
 .container {
@@ -52,7 +51,8 @@ body {
     margin-bottom: 5px;
     padding: 5px;
 }
-.card2 ul{
+
+.card2 ul {
     padding: 0px;
     padding-bottom: 50px;
 }
@@ -104,7 +104,7 @@ body {
 }
 
 .flex {
-    display: flex !important;
+    display: flex;
 }
 
 .justify-between {
@@ -114,20 +114,24 @@ body {
 .align-center {
     align-items: center !important;
 }
-.chk{
+
+.chk {
     text-decoration: line-through;
 }
-.bar{
-    padding:10px;
+
+.bar {
+    padding: 10px;
     border-bottom: solid;
     border-bottom-color: gray;
     display: flex;
     justify-content: space-between;
 }
-.bar h5{
+
+.bar h5 {
     margin: 0;
 }
-.bar div button{
+
+.bar div button {
     background-color: #bcbcbc;
     border-radius: 50%;
     font-size: 8px;
@@ -136,4 +140,24 @@ body {
     padding: 5px;
     border: none;
     color: #ffffff;
+}
+
+button {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 576.98px) {
+    .flex {
+        display: block;
+        max-width: 100%;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .card2 {
+        margin-right: 0;
+    }
 }
