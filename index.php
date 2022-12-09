@@ -1,0 +1,175 @@
+<?php
+session_start();
+$mysqli = new mysqli("localhost", "root", "", "todo");
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/all.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 1</title>
+</head>
+<body>
+<div id="app">
+    <div class="flex justify-between align-center">
+        <div class="container">
+            <div class="card">
+                <h3>To Do</h3>
+                <ul class="ulist">
+                    <template v-for="task in tasks">
+                        <li :id="task.id">{{task.name}}
+                            <div>
+                                <button @click="showPopUp=true;fetchLists(task.id)">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button>
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </template>
+                    <li class="addcard">
+                        <input @keyup.enter="setTask()" v-model="taskNameValue" v-click-outside="convertTaskInput"
+                               style="width: 100%;padding: 5px"
+                               type="text" placeholder="+ Add A Card" v-if="setTaskInput"/>
+                        <button @click="convertTaskInput" v-else>+ Add A Card</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="container todo-list" v-show="showPopUp">
+            <div class="card2">
+                <div class="bar"><h5>{{currentTask.name}}</h5>
+                    <div>
+                        <button><i class="fa-solid fa-trash"></i></button>
+                        <button @click="showPopUp=false"><i
+                                    class="fa-solid fa-circle-xmark"></i></button>
+                    </div>
+                </div>
+                <ul>
+                    <template v-for="list in lists">
+                        <li>
+                            <label :class="{'chk': checkboxList.includes(list.id)}">
+                                <input v-model="checkboxList" :value="list.id" :checked="checkboxList.includes(list.id)"
+                                       type="checkbox"/>{{list.name}}</label>
+                        </li>
+                    </template>
+                    <li class="addcard">
+                        <input @keyup.enter="setList()" v-model="listNameValue" v-click-outside="convertListInput"
+                               style="width: 100%;padding: 5px"
+                               type="text" placeholder="+ Add A Card" v-if="setListInput"/>
+                        <button @click="convertListInput" v-else>+ Add A Card</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    Vue.directive("click-outside", {
+        bind(el, binding, vnode) {
+            el.clickOutsideEvent = (event) => {
+                if (!(el === event.target || el.contains(event.target)) && event.target.clientHeight > 0) {
+                    vnode.context[binding.expression](event);
+                }
+            };
+            document.body.addEventListener("click", el.clickOutsideEvent);
+        },
+        unbind(el) {
+            document.body.removeEventListener("click", el.clickOutsideEvent);
+        },
+    });
+
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                showPopUp: false,
+                checkboxList: [],
+                lists: [],
+                tasks: [],
+                setTaskInput: false,
+                setListInput: false,
+                currentTask: {},
+                taskNameValue: null,
+                listNameValue: null,
+            }
+        },
+        mounted() {
+            this.fetchTasks();
+        },
+
+        // Creating methods
+        methods: {
+            fetchTasks() {
+                axios.get('queries.php?type=tasks')
+                    .then((response) => {
+                        this.tasks = response.data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            },
+            fetchLists(task_id) {
+                let params = {
+                    type: 'lists',
+                    task_id: task_id,
+                };
+                axios.get('queries.php?type=lists', {params})
+                    .then((response) => {
+                        this.lists = response.data;
+                        this.currentTask = this.tasks.find((item) => item.id === task_id);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            },
+            setTask() {
+                if (this.taskNameValue.length > 0 || this.taskNameValue !== '' || this.taskNameValue !== undefined) {
+                    axios.post('queries.php?type=tasks', {
+                        name: this.taskNameValue,
+                    }).then((response) => {
+                        this.tasks.push(response.data.data);
+                        this.taskNameValue = null;
+                    }).catch((response) => {
+                        console.log(response);
+                    })
+                }
+            },
+            setList() {
+                if (this.listNameValue.length > 0 || this.listNameValue !== '' || this.listNameValue !== undefined) {
+                    axios.post('queries.php?type=lists', {
+                        name: this.listNameValue,
+                        task_id: this.currentTask.id,
+                    }).then((response) => {
+                        this.lists.push(response.data.data);
+                        this.listNameValue = null;
+                    }).catch((response) => {
+                        console.log(response);
+                    })
+                }
+            },
+            convertTaskInput(e) {
+                if (this.setTaskInput) {
+                    this.setTaskInput = false;
+                } else {
+                    this.setTaskInput = true;
+                }
+            },
+            convertListInput(e) {
+                if (this.setListInput) {
+                    this.setListInput = false;
+                } else {
+                    this.setListInput = true;
+                }
+            },
+        }
+    })
+</script>
+</body>
+
+</html>

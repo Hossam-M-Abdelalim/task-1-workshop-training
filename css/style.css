@@ -53,8 +53,8 @@ body {
 }
 
 .card2 ul {
-    padding: 0px;
-    padding-bottom: 50px;
+    padding: 10px;
+    margin: 0;
 }
 
 .ulist {
@@ -85,16 +85,16 @@ body {
     color: #ffffff;
 }
 
-.ulist .addcard {
-    box-shadow: none;
-    background-color: #d8d8d8;
-    border: dimgrey;
-    border-radius: 5px;
-    border-style: dashed;
-    padding: 10px;
+.addcard {
+    box-shadow: none !important;
+    background-color: #d8d8d8 !important;
+    border: dimgrey !important;
+    border-radius: 5px !important;
+    border-style: dashed !important;
+    padding: 10px !important;
 }
 
-.ulist .addcard button {
+.addcard button {
     border: none;
     background-color: #d8d8d8;
     color: dimgrey;
