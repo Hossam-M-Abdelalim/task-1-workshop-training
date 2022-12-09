@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2022 at 09:52 PM
+-- Generation Time: Dec 09, 2022 at 07:38 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `todo`
 --
+CREATE DATABASE IF NOT EXISTS `todo` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `todo`;
 
 -- --------------------------------------------------------
 
@@ -27,39 +29,67 @@ SET time_zone = "+00:00";
 -- Table structure for table `lists`
 --
 
-CREATE TABLE `lists` (
-  `id` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
-  `task_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `lists`;
+CREATE TABLE IF NOT EXISTS `lists` (
+  `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) NOT NULL,
+  `task_id` bigint(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lists_task_id_foreign` (`task_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lists`
+--
+
+INSERT INTO `lists` (`id`, `name`, `task_id`) VALUES
+(3, 'asdasdasdasdasd', 6),
+(4, 'asdasdsadasdsad', 6),
+(5, 'zxczxcxzczxczxczxc', 6),
+(6, 'asdasdasd', 1),
+(7, 'asdasdasd', 2),
+(8, 'zxczxcxzcxzc', 2),
+(9, 'xxxxxxxxxxxxxxxx', 3),
+(10, 'zxczxczxcxzc', 4),
+(11, 'zxczxczxczxc', 5);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tasks`
 --
--- Error reading structure for table todo.tasks: #1932 - Table &#039;todo.tasks&#039; doesn&#039;t exist in engine
--- Error reading data for table todo.tasks: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `todo`.`tasks`&#039; at line 1
+
+DROP TABLE IF EXISTS `tasks`;
+CREATE TABLE IF NOT EXISTS `tasks` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Dumping data for table `tasks`
+--
+
+INSERT INTO `tasks` (`id`, `name`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Test Task', 1, '2022-12-09 18:09:01', '2022-12-09 18:09:01'),
+(2, 'Test Task 2', 1, '2022-12-09 18:09:22', '2022-12-09 18:09:22'),
+(3, 'test task', 1, '2022-12-09 18:15:38', '2022-12-09 18:15:38'),
+(4, 'asdasdasd', 1, '2022-12-09 18:16:48', '2022-12-09 18:16:48'),
+(5, 'zxzxczxc', 1, '2022-12-09 18:17:28', '2022-12-09 18:17:28'),
+(6, '123123123123', 1, '2022-12-09 18:18:48', '2022-12-09 18:18:48');
+
+--
+-- Constraints for dumped tables
 --
 
 --
--- Indexes for table `lists`
+-- Constraints for table `lists`
 --
 ALTER TABLE `lists`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `lists`
---
-ALTER TABLE `lists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD CONSTRAINT `lists_task_id_foreign` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
